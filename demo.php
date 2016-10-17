@@ -16,8 +16,6 @@ $left='';
 $top='';
 $zindex='';
 
-echo "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz " .$query;
-
 while($row=mysql_fetch_assoc($query))
 {
 	// The xyz column holds the position and z-index in the form 200x100x10:
@@ -28,6 +26,7 @@ while($row=mysql_fetch_assoc($query))
 		'.htmlspecialchars($row['text']).'
 		<div class="author">'.htmlspecialchars($row['name']).'</div>
 		<span class="data">'.$row['id'].'</span>
+		<a href="'.$row['id'].'" class="trash">Trash</a>
 	</div>';
 }
 

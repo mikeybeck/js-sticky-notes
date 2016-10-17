@@ -194,3 +194,9 @@ p.tutInfo{
 h1,h2,p.tutInfo{
 	font-family:"Myriad Pro",Arial,Helvetica,sans-serif;
 }
+
+.trash{
+	position:absolute;
+	top:150px;
+	left:5px;
+}

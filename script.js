@@ -4,10 +4,32 @@ $(document).ready(function(){
 	var tmp;
 	
 	$('.note').each(function(){
+		 
+		$("a.trash").click(function ( event ) {
+		 
+			event.preventDefault();
+
+			var noteID = $(this).attr('href')
+
+			$.get('ajax/delete_note.php',{
+				  id	:	noteID
+			});
+
+			$(this).parent().animate({
+				opacity: 0,
+				left: '-=200',
+				height: 'toggle', width: 'toggle'
+			}, 300, function() {
+				// Animation complete.
+			});
+
+		});
+		
 		/* Finding the biggest z-index value of the notes */
+
 		tmp = $(this).css('z-index');
 		if(tmp>zIndex) zIndex = tmp;
-	})
+	});
 
 	/* A helper function for converting a set of elements to draggables: */
 	make_draggable($('.note'));
