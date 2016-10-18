@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <?php
 
 // Error reporting:
@@ -32,18 +33,19 @@ while($row=mysql_fetch_assoc($query))
 
 ?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Sticky Notes With AJAX, PHP &amp; jQuery | Tutorialzine demo</title>
 
 <link rel="stylesheet" type="text/css" href="styles.css" />
-<link rel="stylesheet" type="text/css" href="fancybox/jquery.fancybox-1.2.6.css" media="screen" />
+<link rel="stylesheet" href="fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
-<script type="text/javascript" src="fancybox/jquery.fancybox-1.2.6.pack.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.0.0.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-migrate-3.0.0.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script type="text/javascript" src="fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
 
 <script type="text/javascript" src="script.js"></script>
 
@@ -56,9 +58,9 @@ while($row=mysql_fetch_assoc($query))
 
 
 <div id="main">
-	<a id="addButton" class="green-button" href="add_note.html">Add a note</a>
+	<a id="addButton" class="green-button fancybox.ajax" href="add_note.html">Add a note</a>
     
-	<?php echo $notes?>
+	<?php echo $notes ?>
     
 </div>
 

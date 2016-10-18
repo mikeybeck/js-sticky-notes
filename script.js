@@ -36,85 +36,87 @@ $(document).ready(function(){
 	
 	/* Configuring the fancybox plugin for the "Add a note" button: */
 	$("#addButton").fancybox({
-		'zoomSpeedIn'		: 600,
-		'zoomSpeedOut'		: 500,
-		'easingIn'			: 'easeOutBack',
-		'easingOut'			: 'easeInBack',
-		'hideOnContentClick': false,
-		'padding'			: 15
-	});
-	
-	/* Listening for keyup events on fields of the "Add a note" form: */
-	$('.pr-body,.pr-author').live('keyup',function(e){
-		if(!this.preview)
-			this.preview=$('#fancy_ajax .note');
-		
-		/* Setting the text of the preview to the contents of the input field, and stripping all the HTML tags: */
-		this.preview.find($(this).attr('class').replace('pr-','.')).html($(this).val().replace(/<[^>]+>/ig,''));
-	});
-	
-	/* Changing the color of the preview note: */
-	$('.color').live('click',function(){
-		$('#fancy_ajax .note').removeClass('yellow green blue').addClass($(this).attr('class').replace('color',''));
-	});
-	
-	/* The submit button: */
-	$('#note-submit').live('click',function(e){
-		
-		if($('.pr-body').val().length<4)
-		{
-			alert("The note text is too short!")
-			return false;
-		}
-		
-		if($('.pr-author').val().length<1)
-		{
-			alert("You haven't entered your name!")
-			return false;
-		}
-		
-		$(this).replaceWith('<img src="img/ajax_load.gif" style="margin:30px auto;display:block" />');
-		
-		var data = {
-			'zindex'	: ++zIndex,
-			'body'		: $('.pr-body').val(),
-			'author'		: $('.pr-author').val(),
-			'color'		: $.trim($('#fancy_ajax .note').attr('class').replace('note',''))
-		};
-		
-		
-		/* Sending an AJAX POST request: */
-		$.post('ajax/post.php',data,function(msg){
-						 
-			if(parseInt(msg))
-			{
-				/* msg contains the ID of the note, assigned by MySQL's auto increment: */
-				
-				var tmp = $('#fancy_ajax .note').clone();
-				
-				tmp.find('span.data').text(msg).end().css({'z-index':zIndex,top:0,left:0});
-				tmp.appendTo($('#main'));
-				
-				make_draggable(tmp)
-			}
+        afterShow: function() {
+                
+            $('.color').click(function () {
+                $('.fancybox-wrap .note').removeClass('yellow green blue').addClass($(this).attr('class').replace('color',''));
+            });
+
+            /* Listening for keyup events on fields of the "Add a note" form: */
+            $('.pr-body,.pr-author').on('keyup',function(e){
+			if(!this.preview)
+				this.preview=$('.fancybox-wrap .note');
 			
-			$("#addButton").fancybox.close();
-		});
-		
-		e.preventDefault();
-	})
-	
-	$('.note-form').live('submit',function(e){e.preventDefault();});
+				/* Setting the text of the preview to the contents of the input field, and stripping all the HTML tags: */
+				this.preview.find($(this).attr('class').replace('pr-','.')).html($(this).val().replace(/<[^>]+>/ig,''));
+			});
+
+
+				/* The submit button: */
+			$('#note-submit').on('click',function(e){
+				
+				if($('.pr-body').val().length<4)
+				{
+					alert("The note text is too short!")
+					return false;
+				}
+				
+				if($('.pr-author').val().length<1)
+				{
+					alert("You haven't entered your name!")
+					return false;
+				}
+				
+				$(this).replaceWith('<img src="img/ajax_load.gif" style="margin:30px auto;display:block" />');
+				
+				var data = {
+					'zindex'	: ++zIndex,
+					'body'		: $('.pr-body').val(),
+					'author'		: $('.pr-author').val(),
+					'color'		: $.trim($('.fancybox-wrap .note').attr('class').replace('note',''))
+				};
+				
+				
+				/* Sending an AJAX POST request: */
+				$.post('ajax/post.php',data,function(msg){
+								 
+					if(parseInt(msg))
+					{
+						/* msg contains the ID of the note, assigned by MySQL's auto increment: */
+						
+						var tmp = $('.fancybox-wrap .note').clone();
+						
+						tmp.find('span.data').text(msg).end().css({'z-index':zIndex,top:0,left:0});
+						tmp.appendTo($('body'));
+						
+						make_draggable(tmp);
+					}
+					
+					$.fancybox.close();
+
+				});
+
+				location.reload();
+				
+				e.preventDefault();
+			});
+
+
+			$('.note-form').on('submit',function(e){e.preventDefault();});
+
+		}
+
+	});	
+
 });
 
 var zIndex = 0;
 
-function make_draggable(elements)
-{
+function make_draggable(elements) {
 	/* Elements is a jquery object: */
 	
 	elements.draggable({
-		containment:'parent',
+		containment:'body',
 		start:function(e,ui){ ui.helper.css('z-index',++zIndex); },
 		stop:function(e,ui){
 			
