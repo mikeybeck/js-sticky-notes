@@ -13,6 +13,6 @@ die("0");
 $id = (int)$_GET['id'];
 
 // Delete note:
-mysql_query("DELETE FROM notes WHERE id=".$id);
+mysqli_query($link, "DELETE FROM notes WHERE id=".$id);
 
 ?>

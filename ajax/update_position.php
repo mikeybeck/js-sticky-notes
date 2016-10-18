@@ -16,7 +16,7 @@ $y = (int)$_GET['y'];
 $z = (int)$_GET['z'];
 
 // Saving the position and z-index of the note:
-mysql_query("UPDATE notes SET xyz='".$x."x".$y."x".$z."' WHERE id=".$id);
+mysqli_query($link, "UPDATE notes SET xyz='".$x."x".$y."x".$z."' WHERE id=".$id);
 
 echo "1";
 ?>

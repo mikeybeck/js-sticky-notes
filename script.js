@@ -102,7 +102,10 @@ $(document).ready(function(){
 			});
 
 
-			$('.note-form').on('submit',function(e){e.preventDefault();});
+			$('.note-form').on('submit',function(e) {
+				location.reload(); 
+				e.preventDefault();
+			});
 
 		}
 

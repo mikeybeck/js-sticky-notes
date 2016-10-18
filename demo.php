@@ -8,16 +8,16 @@ error_reporting(E_ALL^E_NOTICE);
 require 'connect.php';
 
 // Removing notes that are older than an hour:
-mysql_query("DELETE FROM notes WHERE id>3 AND dt<SUBTIME(NOW(),'0 1:0:0')");
+//mysqli_query($link, "DELETE FROM notes WHERE id>3 AND dt<SUBTIME(NOW(),'0 1:0:0')");
 
-$query = mysql_query("SELECT * FROM notes ORDER BY id DESC");
+$query = mysqli_query($link, "SELECT * FROM notes ORDER BY id DESC");
 
 $notes = '';
 $left='';
 $top='';
 $zindex='';
 
-while($row=mysql_fetch_assoc($query))
+while($row=mysqli_fetch_assoc($query))
 {
 	// The xyz column holds the position and z-index in the form 200x100x10:
 	list($left,$top,$zindex) = explode('x',$row['xyz']);

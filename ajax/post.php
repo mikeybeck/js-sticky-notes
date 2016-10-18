@@ -18,20 +18,20 @@ if(ini_get('magic_quotes_gpc'))
 
 // Escaping the input data:
 
-$author = mysql_real_escape_string(strip_tags($_POST['author']));
-$body = mysql_real_escape_string(strip_tags($_POST['body']));
-$color = mysql_real_escape_string($_POST['color']);
+$author = mysqli_real_escape_string($link, strip_tags($_POST['author']));
+$body = mysqli_real_escape_string($link, strip_tags($_POST['body']));
+$color = mysqli_real_escape_string($link, $_POST['color']);
 $zindex = (int)$_POST['zindex'];
 
 
 /* Inserting a new record in the notes DB: */
-mysql_query('	INSERT INTO notes (text,name,color,xyz)
+mysqli_query($link, '	INSERT INTO notes (text,name,color,xyz)
 				VALUES ("'.$body.'","'.$author.'","'.$color.'","0x0x'.$zindex.'")');
 
-if(mysql_affected_rows($link)==1)
+if(mysqli_affected_rows($link)==1)
 {
 	// Return the id of the inserted row:
-	echo mysql_insert_id($link);
+	echo mysqli_insert_id($link);
 }
 else echo '0';
 
